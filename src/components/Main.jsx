@@ -1,5 +1,9 @@
 import React from 'react'
 import styled from "styled-components";
+import axios from 'axios'
+import { useState } from 'react'
+import { useEffect } from 'react';
+
 
 
 const StMain = styled.div`
@@ -25,14 +29,29 @@ width: 270px;
 `;
 
 function Main() {
+  const [memos, setMemos] = useState(null);
+  
+  const fetchMemos = async () => {
+    const {data} = await axios.get("http://localhost:4000/memos")
+    setMemos(data);
+  };
+
+  useEffect(() => {
+    fetchMemos();
+  }, []);
 
   return (
     <StMain>
         <StListWrapper>
-    <StBox>dsadasd</StBox>
-    <StBox>dsadasd</StBox>
-    <StBox>dsadasd</StBox>
-    </StListWrapper>
+          {memos?.map((item) => {
+            return(
+            <StBox key={item.id}>
+            {item.id} : {item.title}
+            </StBox>
+            );
+          })}
+    
+      </StListWrapper>
     </StMain>
   )
 }

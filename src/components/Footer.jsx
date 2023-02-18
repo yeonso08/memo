@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import WriteModal from './WriteModal'
 import { useState } from 'react'
+import axios from 'axios'
 
 const Footer= () => {
+  
   const [writeModalOn, setWriteModalOn] = useState(false);
   return (
     <>
