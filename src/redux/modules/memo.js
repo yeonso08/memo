@@ -33,16 +33,28 @@ const memosSlice = createSlice({
     name: "memos",
     initialState,
     reducers: {
-        addTitle: async (state, action) => {
-            await axios.post("http://localhost:3001/memos", action.payload);
-            state.memos = action.payload
-        },
-
-        // deleteTitle: async (state, action) => {
-        //     axios.delete("http://localhost:3001/memos", action.payload);
-        //     state.memos = 
+        // addTitle: async (state, action) => {
+        //     await axios.post("http://localhost:3001/memos", action.payload);
+        //     state.memos = action.payload
+        //     return __getTitle()
         // },
+        addTitle: async (state, action) => {
+            try {
+                // 새로운 메모를 생성합니다.
+                const response = await axios.post("http://localhost:3001/memos", action.payload);
+                const newMemo = response.data;
+                
+                // state에 새로운 메모를 추가합니다.
+                state.memos.push(newMemo);
+                state.isError = false;
+                state.error = null;
+            } catch (error) {
+                state.isError = true;
+                state.error = error;
+            }
+        }
     },
+
     extraReducers: {
         [__getTitle.fulfilled] : (state, action) => {
             state.isLoading = false;

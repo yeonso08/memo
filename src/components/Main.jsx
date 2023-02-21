@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { __getTitle } from '../redux/modules/memo';
+import { addTitle } from '../redux/modules/memo';
 import { Link } from 'react-router-dom';
 
 
@@ -59,7 +60,7 @@ function Main() {
             <Link to ={`/detail/${item.id}`} key={item.id}>
               {item && (
               <StBox>
-                {item.id} : {item.title}
+                {item.title}
               </StBox>
               )}
             </Link>

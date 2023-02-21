@@ -1,36 +1,12 @@
 {
   "memos": [
     {
-      "id": 1,
-      "title": "json-server"
-    },
-    {
-      "title": "asdasd",
-      "id": 2
-    },
-    {
-      "title": "zxczxczxczxc",
+      "title": "asdasdasd",
       "id": 3
     },
     {
-      "title": "asdasd",
-      "id": 4
-    },
-    {
-      "title": "asdasd",
+      "title": "ㅁㄴㅇㅁㄴㅇ",
       "id": 5
-    },
-    {
-      "title": "asdasd",
-      "id": 6
-    },
-    {
-      "title": "ㅓ호",
-      "id": 7
-    },
-    {
-      "title": "ㅏㅗ",
-      "id": 8
     }
   ]
 }
