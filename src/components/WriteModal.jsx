@@ -5,16 +5,25 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTitle } from '../redux/modules/memo';
 
-const WriteModal = ({show, onHide}) => {
+const WriteModal = (props) => {
   const [inputValue, setInputValue] = useState({
     title : "",
   })
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(addTitle(inputValue));
+    onHide();
+  }
+  const onHide = () => {
+    setInputValue({ title: "" });
+    props.onHide();
+  };
 
   const dispatch = useDispatch();
 
   return (
     <Modal
-      show = {show}
+      show = {props.show}
       onHide = {onHide}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
@@ -39,10 +48,7 @@ const WriteModal = ({show, onHide}) => {
     </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" type="submit" onClick={(e) => {
-          e.preventDefault();
-          dispatch(addTitle(inputValue))
-        }}>
+        <Button variant="primary" type="submit"  onClick={onSubmit}>
         저장
       </Button>
       <Button onClick={onHide}>닫기</Button>

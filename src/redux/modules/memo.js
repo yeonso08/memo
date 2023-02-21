@@ -10,14 +10,22 @@ const initialState = {
 
 export const __getTitle = createAsyncThunk(
     "getTitle",
-    async (payload, thunkAPI) => {
-        try{
-            const response = await axios.get("http://localhost:3001/memos")
-            thunkAPI.fulfillWithValue(response.data);
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error);
-        }
+    // async (payload, thunkAPI) => {
+    //     try{
+    //         const response = await axios.get("http://localhost:3001/memos")
+    //         thunkAPI.fulfillWithValue(response.data);
+    //     } catch (error) {
+    //         return thunkAPI.rejectWithValue(error);
+    //     }
         
+    // }
+    async () => {
+        try {
+            const response = await axios.get("http://localhost:3001/memos");
+            return response.data;
+        } catch (error) {
+            return error;
+        }
     }
 );
 
@@ -26,7 +34,7 @@ const memosSlice = createSlice({
     initialState,
     reducers: {
         addTitle: async (state, action) => {
-            axios.post("http://localhost:3001/memos", action.payload);
+            await axios.post("http://localhost:3001/memos", action.payload);
             state.memos = action.payload
         },
 

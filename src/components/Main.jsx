@@ -40,7 +40,7 @@ function Main() {
 
   useEffect(() => {
     dispatch(__getTitle());
-  }, []);
+  }, [dispatch]);
 
   if(isLoading) 
     {
@@ -55,18 +55,18 @@ function Main() {
   return (
     <StMain>
         <StListWrapper>
-          {memos?.map((item) => {
-            return(
-              <Link to ={`/detail/${item.id}`}>
-            <StBox key={item.id}>
-            {item.id} : {item.title}
-            </StBox>
+          {memos?.map((item) => (
+            <Link to ={`/detail/${item.id}`} key={item.id}>
+              {item && (
+              <StBox>
+                {item.id} : {item.title}
+              </StBox>
+              )}
             </Link>
-          );
-          })}
+          ))}
       </StListWrapper>
     </StMain>
-  )
+  );
 }
 
 export default Main
