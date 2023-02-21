@@ -2,16 +2,15 @@ import React, { useState } from 'react'
 import { Modal, Button, Form, Container } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTitle } from '../redux/modules/memo';
 
 const WriteModal = ({show, onHide}) => {
   const [inputValue, setInputValue] = useState({
     title : "",
   })
 
-  const onSubmitHandler = async () => {
-    axios.post("http://localhost:4000/memos", inputValue);
-    // setMemos([...memos, inputValue]);
-  }
+  const dispatch = useDispatch();
 
   return (
     <Modal
@@ -28,10 +27,7 @@ const WriteModal = ({show, onHide}) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-    <Form onSubmit={(e) => {
-        e.preventDefault();
-        onSubmitHandler()
-      }}>
+    <Form>
       <Form.Group>
         <Form.Label>내용</Form.Label>
         <Form.Control type="text" placeholder="입력 해주세요" value={inputValue.title}
@@ -43,7 +39,10 @@ const WriteModal = ({show, onHide}) => {
     </Form>
       </Modal.Body>
       <Modal.Footer>
-      <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" onClick={(e) => {
+          e.preventDefault();
+          dispatch(addTitle(inputValue))
+        }}>
         저장
       </Button>
       <Button onClick={onHide}>닫기</Button>
