@@ -52,8 +52,24 @@ const memosSlice = createSlice({
                 state.isError = true;
                 state.error = error;
             }
-        }
-    },
+        },
+            
+            updateTitle: async (state, action) => {
+                try {
+                  const { id, title } = action.payload;
+                  // 서버에 업데이트 요청을 보냅니다.
+                  await axios.put(`http://localhost:3001/memos/${id}`, { title });
+                  // state에서 해당 메모를 찾아 제목을 업데이트합니다.
+                  const memoIndex = state.memos.findIndex((memo) => memo.id === id);
+                  state.memos[memoIndex].title = title;
+                  state.isError = false;
+                  state.error = null;
+                } catch (error) {
+                  state.isError = true;
+                  state.error = error;
+                }
+              },
+        },
 
     extraReducers: {
         [__getTitle.fulfilled] : (state, action) => {
@@ -74,4 +90,4 @@ const memosSlice = createSlice({
 });
 
 export default memosSlice.reducer;
-export const {addTitle, getTitle} = memosSlice.actions
+export const {addTitle, getTitle, updateTitle} = memosSlice.actions

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import WriteModal from './WriteModal'
 import { useState } from 'react'
 import axios from 'axios'
+import { BsFillPencilFill } from "react-icons/bs" ;
 
 const Footer= () => {
   
@@ -9,8 +10,8 @@ const Footer= () => {
   return (
     <>
       <button variant="primary" onClick={() => setWriteModalOn(true)}>
-        작성하기
-      </button>
+        <BsFillPencilFill />
+      </button >
 
       <WriteModal
         show={writeModalOn}
@@ -19,5 +20,4 @@ const Footer= () => {
     </>
   )
 }
-
 export default Footer
