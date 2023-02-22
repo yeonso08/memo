@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Modal, Button, Form, Container } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { addTitle } from '../redux/modules/memo';
+import { __addTitle } from '../redux/modules/memo';
 import { __getTitle } from '../redux/modules/memo';
 import { useNavigate } from 'react-router';
 
@@ -12,7 +12,7 @@ const WriteModal = (props) => {
   })
 
   const onSubmit = () => {
-    dispatch(addTitle(inputValue));
+    dispatch(__addTitle(inputValue));
     setInputValue({ title: "" });
     props.onHide();
   }

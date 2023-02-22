@@ -17,6 +17,11 @@ const StMain = styled.div`
   color: black;
   margin-top:0px;
 `;
+
+const AddButton = styled(Link)`
+text-Decoration: none;
+`;
+
 export const StListWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -37,14 +42,12 @@ function Main() {
     return state.memos;
   });
 
-  console.log(memos)
   const [tittle, setTitle] = useState("");
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(__getTitle());
-    console.log("test");
   }, [dispatch]);
 
   if(isLoading) 
@@ -61,13 +64,13 @@ function Main() {
     <StMain>
         <StListWrapper>
           {memos?.map((item) => (
-            <Link to ={`/detail/${item.id}`} key={item.id}>
+            <AddButton style={{AddButton}} to ={`/detail/${item.id}`} key={item.id}>
               {item && (
               <StBox>
                 {item.title}
               </StBox>
               )}
-            </Link>
+            </AddButton>
           ))}
       </StListWrapper>
     </StMain>

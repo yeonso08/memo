@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom'
 import { StBox, StListWrapper } from '../components/Main';
-import { __getTitle,updateTitle} from '../redux/modules/memo';
+import { __getTitle,__updateTitle} from '../redux/modules/memo';
 import axios from 'axios'
 import { BsFillPencilFill } from "react-icons/bs";
 import { RiDeleteBin5Fill } from "react-icons/ri";
@@ -43,9 +43,8 @@ const handleSave = async () => {
     await axios.put(`http://localhost:3001/memos/${selectedMemo.id}`, {
       title: newTitle,
     });
-    dispatch(updateTitle({ id: selectedMemo.id, title: newTitle }));
+    dispatch(__updateTitle({ id: selectedMemo.id, title: newTitle }));
     setIsEditing(false);
-    navigate('/');
   } catch (error) {
     console.error(error);
   }
