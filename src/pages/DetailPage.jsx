@@ -6,12 +6,15 @@ import { __getTitle,updateTitle} from '../redux/modules/memo';
 import axios from 'axios'
 import { BsFillPencilFill } from "react-icons/bs";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import { MdOutlineSaveAlt } from "react-icons/md";
+import { GiCancel } from "react-icons/gi";
 
 function DetailPage() {
     const paramas = useParams();
     const memos = useSelector((state) => {
     return state.memos.memos;
 });
+
 const dispatch = useDispatch();
 const selectedMemo = memos.find((item) => item.id === parseInt(paramas.id));
 const [isEditing, setIsEditing] = useState(false);
@@ -56,8 +59,10 @@ const handleCancel = () => {
                    value={newTitle}
                    onChange={(e) => setNewTitle(e.target.value)}
                  />
-                 <button onClick={handleSave}>저장</button>
-                 <button onClick={handleCancel}>취소</button>
+                 <button onClick={handleSave}>
+                  <MdOutlineSaveAlt />
+                 </button>
+                 <button onClick={handleCancel}><GiCancel /></button>
                </>
              ) : (
                <>
