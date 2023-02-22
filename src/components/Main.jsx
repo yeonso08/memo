@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from "styled-components";
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -37,10 +37,14 @@ function Main() {
     return state.memos;
   });
 
+  console.log(memos)
+  const [tittle, setTitle] = useState("");
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(__getTitle());
+    console.log("test");
   }, [dispatch]);
 
   if(isLoading) 

@@ -10,23 +10,24 @@ const initialState = {
 
 export const __getTitle = createAsyncThunk(
     "getTitle",
-    // async (payload, thunkAPI) => {
-    //     try{
-    //         const response = await axios.get("http://localhost:3001/memos")
-    //         thunkAPI.fulfillWithValue(response.data);
-    //     } catch (error) {
-    //         return thunkAPI.rejectWithValue(error);
-    //     }
-        
-    // }
-    async () => {
-        try {
-            const response = await axios.get("http://localhost:3001/memos");
-            return response.data;
+    async (payload, thunkAPI) => {
+        try{
+            const response = await axios.get("http://localhost:3001/memos")
+            return thunkAPI.fulfillWithValue(response.data);
         } catch (error) {
-            return error;
+            return thunkAPI.rejectWithValue(error);
         }
     }
+        
+    // }
+    // async () => {
+    //     try {
+    //         const response = await axios.get("http://localhost:3001/memos");
+    //         return response.data;
+    //     } catch (error) {
+    //         return error;
+    //     }
+    // }
 );
 
 const memosSlice = createSlice({
@@ -35,17 +36,15 @@ const memosSlice = createSlice({
     reducers: {
         // addTitle: async (state, action) => {
         //     await axios.post("http://localhost:3001/memos", action.payload);
-        //     state.memos = action.payload
-        //     return __getTitle()
+        //     state.memos.push(action.payload)
         // },
         addTitle: async (state, action) => {
             try {
                 // 새로운 메모를 생성합니다.
-                const response = await axios.post("http://localhost:3001/memos", action.payload);
-                const newMemo = response.data;
+                axios.post("http://localhost:3001/memos", action.payload);
+                state.memos.push(action.payload)
                 
-                // state에 새로운 메모를 추가합니다.
-                state.memos.push(newMemo);
+                // state에 새로운 메모를 추가합니다
                 state.isError = false;
                 state.error = null;
             } catch (error) {

@@ -1,24 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Modal, Button, Form, Container } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTitle } from '../redux/modules/memo';
+import { __getTitle } from '../redux/modules/memo';
+import { useNavigate } from 'react-router';
 
 const WriteModal = (props) => {
   const [inputValue, setInputValue] = useState({
     title : "",
   })
-  const onSubmit = (e) => {
-    e.preventDefault();
+
+  const onSubmit = () => {
     dispatch(addTitle(inputValue));
-    onHide();
+    setInputValue({ title: "" });
+    props.onHide();
   }
   const onHide = () => {
     setInputValue({ title: "" });
     props.onHide();
   };
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   return (
