@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import WriteModal from './WriteModal'
 import { useState } from 'react'
-import axios from 'axios'
 import { BsFillPencilFill } from "react-icons/bs" ;
 
 const Footer= () => {

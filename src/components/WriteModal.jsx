@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { Modal, Button, Form, Container } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { __addTitle } from '../redux/modules/memo';
-import { __getTitle } from '../redux/modules/memo';
-import { useNavigate } from 'react-router';
+import useInput from '../hooks/useInput';
 
 const WriteModal = (props) => {
-  const [inputValue, setInputValue] = useState({
-    title : "",
-  })
+  const dispatch = useDispatch();
+  const [inputValue, setInputValue, onchange] = useInput();
+  const [submitDisabled, setSubmitDisabled] = useState(false);
+
+  useEffect(() => {
+    setSubmitDisabled(inputValue === "")
+  }, [inputValue])
 
   const onSubmit = () => {
-    dispatch(__addTitle(inputValue));
-    setInputValue({ title: "" });
+    dispatch(__addTitle({title : inputValue}));
+    setInputValue("");
     props.onHide();
   }
   const onHide = () => {
-    setInputValue({ title: "" });
+    setInputValue("");
     props.onHide();
   };
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   return (
     <Modal
@@ -42,16 +42,23 @@ const WriteModal = (props) => {
     <Form>
       <Form.Group>
         <Form.Label>내용</Form.Label>
-        <Form.Control type="text" placeholder="입력 해주세요" value={inputValue.title}
-        onChange = {(e) => {
-          setInputValue({
-            title: e.target.value});
-          }} />
+        <Form.Control type="text" placeholder="두 글자 이상 해주세요" value={inputValue.title}
+        onChange = {onchange} />
       </Form.Group>
     </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" type="submit"  onClick={onSubmit}>
+        <Button variant="primary" type="submit"  onClick={() => {
+          if(inputValue.length < 2)
+          {
+            window.alert("두 글자 이상 입력해주세요")
+            return
+          }
+          else 
+          {
+            onSubmit();
+          }
+        }} disabled={submitDisabled} >
         저장
       </Button>
       <Button onClick={onHide}>닫기</Button>

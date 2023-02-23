@@ -1,14 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom'
-import { StBox, StListWrapper } from '../components/Main';
+import {  StListWrapper } from '../components/Main';
 import { __getTitle,__updateTitle} from '../redux/modules/memo';
+import styled from "styled-components";
 import axios from 'axios'
 import { BsFillPencilFill } from "react-icons/bs";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { MdOutlineSaveAlt } from "react-icons/md";
 import { GiCancel } from "react-icons/gi";
-
+import useInput from '../hooks/useInput';
+const StBoxx = styled.div`
+  width: 400px;
+  border: 4px solid yellow;
+  background-color: yellow;
+  min-height: 250px;
+  border-radius: 12px;
+  padding: 12px 24px 24px 24px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
 
 function DetailPage() {
     const paramas = useParams();
@@ -20,7 +33,7 @@ function DetailPage() {
 const dispatch = useDispatch();
 const selectedMemo = memos.find((item) => item.id === parseInt(paramas.id));
 const [isEditing, setIsEditing] = useState(false);
-const [newTitle, setNewTitle] = useState(selectedMemo.title);
+const [inputValue, setInputValue, onchange] = useInput(selectedMemo.title);
 
 useEffect(() => {
   dispatch(__getTitle());
@@ -41,9 +54,9 @@ const handleDelete = async (id) => {
 const handleSave = async () => {
   try {
     await axios.put(`http://localhost:3001/memos/${selectedMemo.id}`, {
-      title: newTitle,
+      title: inputValue,
     });
-    dispatch(__updateTitle({ id: selectedMemo.id, title: newTitle }));
+    dispatch(__updateTitle({ id: selectedMemo.id, title: inputValue }));
     setIsEditing(false);
   } catch (error) {
     console.error(error);
@@ -52,19 +65,19 @@ const handleSave = async () => {
 
 const handleCancel = () => {
   setIsEditing(false);
-  setNewTitle(selectedMemo.title);
+  setInputValue(selectedMemo.title);
 };
 
   return (
     <StListWrapper>
       {selectedMemo ? (
-            <StBox key={selectedMemo?.id}>
+            <StBoxx key={selectedMemo?.id}>
              {isEditing ? (
                <>
                  <input
                    type="text"
-                   value={newTitle}
-                   onChange={(e) => setNewTitle(e.target.value)}
+                   value={inputValue}
+                   onChange={onchange}
                  />
                  <button onClick={handleSave}>
                   <MdOutlineSaveAlt />
@@ -80,7 +93,7 @@ const handleCancel = () => {
                  <button onClick={() => handleDelete(selectedMemo.id)}><RiDeleteBin5Fill /></button>
                </>
              )}
-            </StBox>
+            </StBoxx>
           ): null
       }
     </StListWrapper>

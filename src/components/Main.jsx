@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
 import styled from "styled-components";
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { __getTitle } from '../redux/modules/memo';
-import { addTitle } from '../redux/modules/memo';
 import { Link } from 'react-router-dom';
+import '../App.css';
+
 
 
 
@@ -42,8 +42,6 @@ function Main() {
     return state.memos;
   });
 
-  const [tittle, setTitle] = useState("");
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -67,7 +65,7 @@ function Main() {
             <AddButton style={{AddButton}} to ={`/detail/${item.id}`} key={item.id}>
               {item && (
               <StBox>
-                {item.title}
+                <div className='App'>{item.title}</div>
               </StBox>
               )}
             </AddButton>
