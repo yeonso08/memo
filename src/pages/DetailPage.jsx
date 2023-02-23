@@ -41,7 +41,7 @@ useEffect(() => {
 
 const handleDelete = async (id) => {
   try {
-    await axios.delete(`http://localhost:3001/memos/${id}`);
+    await axios.delete(`${process.env.REACT_APP_MEMOS}/memos/${id}`);
     // 삭제가 완료되면 메모 목록을 다시 불러옵니다.
     dispatch(__getTitle());
     // 메모 삭제 후 메모 목록으로 이동
@@ -53,7 +53,7 @@ const handleDelete = async (id) => {
 
 const handleSave = async () => {
   try {
-    await axios.put(`http://localhost:3001/memos/${selectedMemo.id}`, {
+    await axios.put(`${process.env.REACT_APP_MEMOS}/memos/${selectedMemo.id}`, {
       title: inputValue,
     });
     dispatch(__updateTitle({ id: selectedMemo.id, title: inputValue }));

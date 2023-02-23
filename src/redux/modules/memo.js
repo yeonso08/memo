@@ -12,7 +12,7 @@ export const __getTitle = createAsyncThunk(
   'getTitle',
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get('http://localhost:3001/memos');
+      const response = await axios.get(`${process.env.REACT_APP_MEMOS}/memos`);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -23,7 +23,7 @@ export const __getTitle = createAsyncThunk(
 export const __addTitle = createAsyncThunk(
   'addTitle',
   async (payload, thunkAPI) => {
-    const res = await axios.post('http://localhost:3001/memos', payload);
+    const res = await axios.post(`${process.env.REACT_APP_MEMOS}/memos`, payload);
 
     return thunkAPI.fulfillWithValue(res.data);
   }
@@ -33,7 +33,7 @@ export const __updateTitle = createAsyncThunk(
     'updateTitle',
     async (payload, thunkAPI) => {
         const { id, title } = payload;
-        const res = await axios.put(`http://localhost:3001/memos/${id}`, { title });
+        const res = await axios.put(`${process.env.REACT_APP_MEMOS}/memos/${id}`, { title });
       return thunkAPI.fulfillWithValue(res.data);
     }
   );
